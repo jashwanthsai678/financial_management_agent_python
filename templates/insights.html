@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h1 class="mb-4">💡 Savings Insights</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Financial Insights</h5>
+                <div class="insights-content">
+                    {% if insights %}
+                        {% for line in insights.split('\n') %}
+                        <p class="{{ 'fw-bold' if loop.first or 'Tip:' in line else '' }}
+                               {{ 'text-success' if 'Excellent' in line else '' }}
+                               {{ 'text-warning' if 'Good' in line else '' }}
+                               {{ 'text-danger' if 'low' in line else '' }}">
+                            {{ line }}
+                        </p>
+                        {% endfor %}
+                    {% else %}
+                        <p class="text-muted">No insights available. Add more transaction data.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Monthly Trends</h5>
+                {% if trends_chart %}
+                    {{ trends_chart|safe }}
+                {% else %}
+                    <p class="text-muted">No data available for trends analysis.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

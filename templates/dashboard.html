@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h1 class="mb-4">💰 Financial Dashboard</h1>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card text-white bg-success">
+            <div class="card-body">
+                <h5 class="card-title">Total Income</h5>
+                <h2 class="card-text">₹{{ "%.2f"|format(summary.total_income) }}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-white bg-danger">
+            <div class="card-body">
+                <h5 class="card-title">Total Expenses</h5>
+                <h2 class="card-text">₹{{ "%.2f"|format(summary.total_expenses) }}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-white bg-{{ 'success' if summary.net_savings >= 0 else 'danger' }}">
+            <div class="card-body">
+                <h5 class="card-title">Net Savings</h5>
+                <h2 class="card-text">₹{{ "%.2f"|format(summary.net_savings) }}</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="card-title mb-0">Quick Actions</h5>
+                    <div>
+                        <button id="generateSampleData" class="btn btn-outline-primary btn-sm me-2">
+                            <i class="fas fa-database"></i> Generate Sample Data
+                        </button>
+                        <a href="/generate_report" class="btn btn-primary btn-sm">
+                            <i class="fas fa-download"></i> Generate Full Report
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Expense Distribution</h5>
+                {% if pie_chart %}
+                    {{ pie_chart|safe }}
+                {% else %}
+                    <p class="text-muted">No expense data available. 
+                        <button id="generateSampleData2" class="btn btn-link p-0">Generate sample data</button>
+                    </p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Monthly Trends</h5>
+                {% if trends_chart %}
+                    {{ trends_chart|safe }}
+                {% else %}
+                    <p class="text-muted">No transaction data available. 
+                        <button id="generateSampleData3" class="btn btn-link p-0">Generate sample data</button>
+                    </p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Generate sample data functionality
+    const generateButtons = document.querySelectorAll('#generateSampleData, #generateSampleData2, #generateSampleData3');
+    
+    generateButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            fetch('/generate_sample_data', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Sample data generated successfully!');
+                    location.reload();
+                } else {
+                    alert('Error: ' + data.message);
+                }
+            })
+            .catch(error => {
+                alert('Error generating sample data: ' + error);
+            });
+        });
+    });
+});
+</script>
+{% endblock %}

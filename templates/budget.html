@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h1 class="mb-4">💰 Budget Management</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Monthly Budgets</h5>
+                <form id="budgetForm">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Category</th>
+                                    <th>Budget (₹)</th>
+                                    <th>Spent (₹)</th>
+                                    <th>Remaining (₹)</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in budget_data %}
+                                <tr>
+                                    <td>{{ item.category }}</td>
+                                    <td>
+                                        <input type="number" 
+                                               class="form-control form-control-sm budget-input" 
+                                               data-category="{{ item.category }}"
+                                               value="{{ "%.2f"|format(item.budget) }}"
+                                               step="0.01">
+                                    </td>
+                                    <td>₹{{ "%.2f"|format(item.spent) }}</td>
+                                    <td class="{{ 'text-success' if item.remaining >= 0 else 'text-danger' }}">
+                                        ₹{{ "%.2f"|format(item.remaining) }}
+                                    </td>
+                                    <td>
+                                        {% set percentage = item.display_percentage %}
+                                        <div class="progress" style="height: 20px;">
+                                            <div class="progress-bar 
+                                                {% if percentage <= 80 %}bg-success
+                                                {% elif percentage <= 100 %}bg-warning
+                                                {% else %}bg-danger{% endif %}" 
+                                                style="width: {{ percentage }}%">
+                                                {{ "%.1f"|format(percentage) }}%
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <button type="submit" class="btn btn-primary mt-3">Update Budgets</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Budget Summary</h5>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card bg-light">
+                            <div class="card-body text-center">
+                                <h6 class="card-title">Total Budget</h6>
+                                <h4 class="text-primary">₹{{ "%.2f"|format(budget_data|sum(attribute='budget')) }}</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card bg-light">
+                            <div class="card-body text-center">
+                                <h6 class="card-title">Total Spent</h6>
+                                <h4 class="text-danger">₹{{ "%.2f"|format(budget_data|sum(attribute='spent')) }}</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card bg-light">
+                            <div class="card-body text-center">
+                                <h6 class="card-title">Total Remaining</h6>
+                                <h4 class="text-success">₹{{ "%.2f"|format(budget_data|sum(attribute='remaining')) }}</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.getElementById('budgetForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const budgetData = {};
+    const inputs = document.querySelectorAll('.budget-input');
+    
+    inputs.forEach(input => {
+        const category = input.getAttribute('data-category');
+        const value = parseFloat(input.value);
+        if (!isNaN(value)) {
+            budgetData[category] = value;
+        }
+    });
+    
+    fetch('/update_budgets', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(budgetData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Budgets updated successfully!');
+            location.reload();
+        } else {
+            alert('Error: ' + data.message);
+        }
+    })
+    .catch(error => {
+        alert('Error updating budgets: ' + error);
+    });
+});
+</script>
+{% endblock %}

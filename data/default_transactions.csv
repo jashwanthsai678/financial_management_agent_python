@@ -1,0 +1,101 @@
+Date,Description,Amount,Category,Type
+2025-07-18,Metro,536.97,Transportation,Expense
+2025-08-07,Grocery,1238.6,Food & Dining,Expense
+2025-07-15,Internet Bill,3675.99,Utilities,Expense
+2025-07-24,Concert,672.84,Entertainment,Expense
+2025-08-24,Local Market,2852.28,Shopping,Expense
+2025-08-18,Miscellaneous,1428.06,Other,Expense
+2025-08-08,Zomato Order,1053.92,Food & Dining,Expense
+2025-08-17,PPF,5882.53,Investments,Expense
+2025-08-11,Miscellaneous,1543.6,Other,Expense
+2025-09-17,Water Bill,3276.88,Utilities,Expense
+2025-08-29,Cafe,1166.78,Food & Dining,Expense
+2025-07-20,Tuition,7967.87,Education,Expense
+2025-07-27,Salon,1184.99,Personal Care,Expense
+2025-07-31,Street Food,837.09,Food & Dining,Expense
+2025-08-02,Petrol,828.45,Transportation,Expense
+2025-07-27,Street Food,184.15,Food & Dining,Expense
+2025-08-30,Amazon Prime,886.11,Entertainment,Expense
+2025-09-20,Spa,1610.52,Personal Care,Expense
+2025-08-28,Hospital,1969.83,Healthcare,Expense
+2025-09-08,Uber,924.85,Transportation,Expense
+2025-07-30,Petrol,355.36,Transportation,Expense
+2025-07-26,Health Checkup,2068.92,Healthcare,Expense
+2025-08-26,House Rent,12604.17,Rent,Expense
+2025-09-12,Movie Tickets,2451.66,Entertainment,Expense
+2025-07-15,Flipkart,3826.73,Shopping,Expense
+2025-09-02,Electricity Bill,1374.74,Utilities,Expense
+2025-09-28,Fixed Deposit,6164.16,Investments,Expense
+2025-09-21,Stocks,7043.45,Investments,Expense
+2025-10-01,Swiggy Order,532.36,Food & Dining,Expense
+2025-08-02,Auto Rickshaw,832.36,Transportation,Expense
+2025-09-14,Water Bill,847.99,Utilities,Expense
+2025-09-17,Street Food,1312.77,Food & Dining,Expense
+2025-09-07,Maintenance,12088.25,Rent,Expense
+2025-08-27,Clothes,2947.89,Shopping,Expense
+2025-08-30,Books,1812.66,Education,Expense
+2025-07-25,Maintenance,8386.18,Rent,Expense
+2025-09-16,Salon,418.92,Personal Care,Expense
+2025-09-28,Cafe,647.72,Food & Dining,Expense
+2025-07-05,Maintenance,9751.56,Rent,Expense
+2025-07-24,Electronics,5444.41,Shopping,Expense
+2025-09-20,Uber,265.92,Transportation,Expense
+2025-07-13,Electronics,2259.9,Shopping,Expense
+2025-09-16,Amusement Park,415.64,Entertainment,Expense
+2025-09-23,Grocery,362.72,Food & Dining,Expense
+2025-09-25,Salon,1922.12,Personal Care,Expense
+2025-07-30,Zomato Order,986.75,Food & Dining,Expense
+2025-09-02,Amusement Park,1747.56,Entertainment,Expense
+2025-07-09,Grocery,133.55,Food & Dining,Expense
+2025-07-18,Hospital,4381.62,Healthcare,Expense
+2025-09-22,Fixed Deposit,9268.64,Investments,Expense
+2025-08-20,Concert,1508.06,Entertainment,Expense
+2025-08-07,Medicines,3320.74,Healthcare,Expense
+2025-09-03,Concert,1911.65,Entertainment,Expense
+2025-08-11,Health Checkup,1715.44,Healthcare,Expense
+2025-10-01,Hospital,2674.72,Healthcare,Expense
+2025-08-10,Metro,199.17,Transportation,Expense
+2025-10-01,Zomato Order,986.38,Food & Dining,Expense
+2025-08-15,Netflix,537.51,Entertainment,Expense
+2025-07-27,Local Market,1137.44,Shopping,Expense
+2025-09-02,Donation,1270.83,Other,Expense
+2025-07-14,Yoga Class,190.82,Personal Care,Expense
+2025-09-17,Maintenance,8354.64,Rent,Expense
+2025-07-16,Books,4974.37,Education,Expense
+2025-08-24,Donation,1848.79,Other,Expense
+2025-09-12,Amazon Prime,500.14,Entertainment,Expense
+2025-08-08,Movie Tickets,2229.96,Entertainment,Expense
+2025-10-02,Salon,685.49,Personal Care,Expense
+2025-07-06,Concert,1011.19,Entertainment,Expense
+2025-08-29,Electronics,372.84,Shopping,Expense
+2025-08-22,Salon,491.64,Personal Care,Expense
+2025-07-31,Mutual Funds,6886.69,Investments,Expense
+2025-07-29,Auto Rickshaw,607.49,Transportation,Expense
+2025-07-13,Books,4081.78,Education,Expense
+2025-09-05,Gift,121.94,Other,Expense
+2025-09-09,Pharmacy,240.9,Healthcare,Expense
+2025-07-12,Online Course,3842.27,Education,Expense
+2025-10-01,Gas Cylinder,833.64,Utilities,Expense
+2025-07-29,Gas Cylinder,4139.73,Utilities,Expense
+2025-09-20,Maintenance,12030.74,Rent,Expense
+2025-09-25,Salon,1738.03,Personal Care,Expense
+2025-09-12,Rewards,8729.91,Other Income,Income
+2025-09-11,Paycheck,52063.77,Salary,Income
+2025-08-23,Client Payment,35676.64,Business,Income
+2025-07-29,Monthly Salary,77130.2,Salary,Income
+2025-07-27,Paycheck,53724.01,Salary,Income
+2025-07-09,Bonus,9476.98,Other Income,Income
+2025-08-20,Freelance Project,10636.19,Freelance,Income
+2025-07-23,Freelance Project,21734.36,Freelance,Income
+2025-07-30,Freelance Project,6420.96,Freelance,Income
+2025-09-18,Business Revenue,39804.09,Business,Income
+2025-08-14,Cashback,8357.32,Other Income,Income
+2025-07-17,Freelance Project,21553.97,Freelance,Income
+2025-10-02,Business Revenue,31223.51,Business,Income
+2025-09-10,Consulting,8641.4,Freelance,Income
+2025-09-12,Business Revenue,30313.78,Business,Income
+2025-07-29,Client Payment,44035.93,Business,Income
+2025-09-09,Cashback,1167.11,Other Income,Income
+2025-08-12,Rewards,1232.38,Other Income,Income
+2025-09-24,Dividends,2687.66,Investments,Income
+2025-09-12,Business Revenue,37491.32,Business,Income

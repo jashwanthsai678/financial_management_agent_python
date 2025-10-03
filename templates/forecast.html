@@ -1,0 +1,179 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h1 class="mb-4">📊 Budget Forecast</h1>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">ML Model Status</h5>
+                {% if model_score is not none %}
+                <div class="alert alert-success">
+                    <strong>Model Trained Successfully!</strong><br>
+                    R² Score: {{ "%.3f"|format(model_score) }}
+                </div>
+                {% else %}
+                <div class="alert alert-warning">
+                    <strong>Model Not Ready</strong><br>
+                    Need more transaction data to train the model.
+                </div>
+                {% endif %}
+                <button class="btn btn-primary" onclick="buildModel()">
+                    Build Prediction Model
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Expense Prediction</h5>
+                <form id="predictionForm">
+                    <div class="row g-2">
+                        <div class="col-6">
+                            <label class="form-label">Day of Week</label>
+                            <input type="number" class="form-control" id="dayOfWeek" min="0" max="6" value="0">
+                            <small class="form-text text-muted">0=Monday, 6=Sunday</small>
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label">Day of Month</label>
+                            <input type="number" class="form-control" id="dayOfMonth" min="1" max="31" value="1">
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label">Month</label>
+                            <input type="number" class="form-control" id="month" min="1" max="12" value="1">
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label">Weekend</label>
+                            <select class="form-select" id="isWeekend">
+                                <option value="0">No</option>
+                                <option value="1">Yes</option>
+                            </select>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label">Category</label>
+                            <select class="form-select" id="predictionCategory">
+                                {% for category in categories %}
+                                <option value="{{ category }}">{{ category }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary mt-3">Predict Expense</button>
+                </form>
+                <div id="predictionResult" class="mt-3"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Budget Forecast</h5>
+                {% if forecast_chart %}
+                    {{ forecast_chart|safe }}
+                {% else %}
+                    <p class="text-muted">No forecast data available. Need more transaction history.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if forecast %}
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Forecast Details</h5>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Month</th>
+                                {% for category in categories %}
+                                <th>{{ category }}</th>
+                                {% endfor %}
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for month, data in forecast.items() %}
+                            <tr>
+                                <td>{{ month }}</td>
+                                {% for category in categories %}
+                                <td>₹{{ "%.2f"|format(data.get(category, 0)) }}</td>
+                                {% endfor %}
+                                <td class="fw-bold">₹{{ "%.2f"|format(data.values()|list|sum) }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+function buildModel() {
+    alert('Building model... This may take a moment.');
+    // The model is automatically built when visiting the forecast page
+    location.reload();
+}
+
+document.getElementById('predictionForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const formData = {
+        day_of_week: document.getElementById('dayOfWeek').value,
+        day_of_month: document.getElementById('dayOfMonth').value,
+        month: document.getElementById('month').value,
+        is_weekend: document.getElementById('isWeekend').value,
+        category: document.getElementById('predictionCategory').value
+    };
+    
+    fetch('/predict_expense', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        const resultDiv = document.getElementById('predictionResult');
+        if (data.success) {
+            resultDiv.innerHTML = `
+                <div class="alert alert-info">
+                    <strong>Predicted Expense:</strong> ₹${data.prediction.toLocaleString('en-IN', {minimumFractionDigits: 2})}
+                </div>
+            `;
+        } else {
+            resultDiv.innerHTML = `
+                <div class="alert alert-danger">
+                    <strong>Error:</strong> ${data.message}
+                </div>
+            `;
+        }
+    })
+    .catch(error => {
+        document.getElementById('predictionResult').innerHTML = `
+            <div class="alert alert-danger">
+                <strong>Error:</strong> ${error}
+            </div>
+        `;
+    });
+});
+</script>
+{% endblock %}
